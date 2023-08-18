@@ -12,3 +12,40 @@ const images = [
     alt: 'Group of Horses Running',
   },
 ];
+
+const galleryListEl = document.querySelector('.gallery');
+
+//створюємо розмітку одного елемента  li>img
+const imageItemEl = images.map(image => {
+  const { url, alt } = image;
+  const markup = `<li class="image-item"><img src="${url}" alt="${alt}"></li>`
+  return markup;
+})
+
+//об'єднуємо масив розміток li в одну строку
+const galleryListMarkup = imageItemEl.join('');
+
+galleryListEl.insertAdjacentHTML('beforeend', galleryListMarkup);
+
+
+//прибираємо скролл задавши ширину зображень не більше ширини вьюпорта
+const imagesEl = document.querySelectorAll('img');
+imagesEl.forEach(el => { el.style.maxWidth = '100%' });
+
+  //стилізумо флексбоксом
+galleryListEl.style.listStyle = 'none';
+galleryListEl.style.display = 'flex';
+galleryListEl.style.flexDirection = 'column';
+galleryListEl.style.gap = '12px';
+
+
+
+
+
+
+/*
+Використовуй масив об'єктів images для створення елементів <img>, вкладених в <li>. Для створення розмітки використовуй шаблонні рядки і метод insertAdjacentHTML().
+
+Усі елементи галереї повинні додаватися в DOM за одну операцію додавання.
+Додай мінімальне оформлення галереї флексбоксами або грідами через CSS класи.
+*/
