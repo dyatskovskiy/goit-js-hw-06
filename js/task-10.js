@@ -1,21 +1,48 @@
-// Напиши скрипт створення і очищення колекції елементів.Користувач вводить кількість елементів в input і натискає кнопку Створити, після чого рендериться колекція.Натисненням на кнопку Очистити, колекція елементів очищається.
+//  ЗАДАЧА: СТВОРЮЄМО ЕЛЕМЕНТИ І ОЧИЩАЄМО ПО НАТИСНЕННЮ ВІДПОВІДНИХ КНОПОК
 
-// Створи функцію createBoxes(amount), яка приймає один параметр - число. Функція створює стільки <div>, скільки вказано в amount і додає їх у div#boxes.
+const boxAmountInput = document.querySelector("#controls > input");
+const divBoxesWrapper = document.querySelector("#boxes");
 
-// Розміри найпершого <div> - 30px на 30px.
-// Кожен елемент після першого повинен бути ширшим і вищим від попереднього на 10px.
-// Всі елементи повинні мати випадковий колір фону у форматі HEX.Використовуй готову функцію getRandomHexColor для отримання кольору.
-
-// Створи функцію destroyBoxes(), яка очищає вміст div#boxes, у такий спосіб видаляючи всі створені елементи.
-
-const numberOfBoxInput = document.querySelector("#controls > input");
 const createBtn = document.querySelector("[data-create]");
 const destroyBtn = document.querySelector("[data-destroy]");
 
-function createBoxes(amount) {}
+//******   СЛУХАЧІ ПОДІЙ   ******
 
-function destroyBoxes() {}
+createBtn.addEventListener("click", () => {
+  const amount = boxAmountInput.value;
+  createBoxes(amount);
+});
 
+destroyBtn.addEventListener("click", destroyBoxes);
+
+// *********      КОЛБЕКИ     *********
+
+// Створення розмітки та додавання в DOM
+function createBoxes(amount) {
+  const divMarkupArray = [];
+  let defaultWidth = 30;
+  let defaultHeight = 30;
+
+  //залежно від значення інпуту створюємо необхідну кількість елементів div
+  for (let i = 1; i <= amount; i++) {
+    const divMarkup = `<div style="width: ${defaultWidth}px; height: ${defaultHeight}px; background-color: ${getRandomHexColor()}"></div>`;
+    divMarkupArray.push(divMarkup);
+
+    defaultWidth += 10;
+    defaultHeight += 10;
+  }
+
+  // додаємо розмітку
+  const markup = divMarkupArray.join("");
+  divBoxesWrapper.insertAdjacentHTML("beforeend", markup);
+}
+
+// Видалення розмітки створеної розмітки
+function destroyBoxes() {
+  divBoxesWrapper.innerHTML = "";
+}
+
+//  Рандомайзер кольорів
 function getRandomHexColor() {
   return `#${Math.floor(Math.random() * 16777215)
     .toString(16)
